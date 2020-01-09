@@ -9,6 +9,7 @@
     "require": {
         "php": "^7.2",
         "ext-dom": "*",
+        "ext-json": "*",
         "league/csv": "^9.5",
         "league/climate": "^3.5"
     }

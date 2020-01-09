@@ -1,0 +1,68 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "1200",
+               "short_name" : "1200",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Rua Pastor William Richard Schisler Filho",
+               "short_name" : "R. Pastor William Richard Schisler Filho",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Itacorubi",
+               "short_name" : "Itacorubi",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Florianópolis",
+               "short_name" : "Florianópolis",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Santa Catarina",
+               "short_name" : "SC",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Brazil",
+               "short_name" : "BR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "88034-100",
+               "short_name" : "88034-100",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "R. Pastor William Richard Schisler Filho, 1200 - Itacorubi, Florianópolis - SC, 88034-100, Brazil",
+         "geometry" : {
+            "location" : {
+               "lat" : -27.5781193,
+               "lng" : -48.50532889999999
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -27.57677031970849,
+                  "lng" : -48.5039799197085
+               },
+               "southwest" : {
+                  "lat" : -27.5794682802915,
+                  "lng" : -48.5066778802915
+               }
+            }
+         },
+         "place_id" : "ChIJ1WkdP-w4J5URg-jAY0ukG5w",
+         "plus_code" : {
+            "compound_code" : "CFCV+QV Florianópolis, State of Santa Catarina, Brazil",
+            "global_code" : "584HCFCV+QV"
+         },
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}

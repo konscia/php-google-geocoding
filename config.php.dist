@@ -1,3 +1,5 @@
 <?php
 
-return [];
+return [
+    'GOOGLE-API-KEY' => 'XZzaDyCEnKbB-veMvKtYaCc6kJCgiMUEn99JZtQ'
+];

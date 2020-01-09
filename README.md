@@ -9,6 +9,7 @@ A api usada nas requests é a api do Google Geocoding: https://developers.google
 
 * PHP 7.2 ou superior;
 * Arquivo CSV em UTF-8
+* php.ini ou ini_set "allow_url_fopen = 1";
 ´
 ## Exemplo de Uso
 
