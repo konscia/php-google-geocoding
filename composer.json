@@ -6,6 +6,11 @@
             "email": "kaleu.caminha@gmail.com"
         }
     ],
+    "autoload": {
+      "psr-4": {
+        "Konscia\\GoogleGeocoding\\": "src/"
+      }
+    },
     "require": {
         "php": "^7.2",
         "ext-dom": "*",
