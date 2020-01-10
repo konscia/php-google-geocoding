@@ -16,10 +16,46 @@ class Geocoder
         $this->client = $client;
     }
 
-    public function addressToGeocoded(Address $addressObj): ?AddressGeocoded
+    public function addressToGeocoded(Address $address, $district): ?AddressGeocoded
+    {
+        $geocoded = $this->geocode($address);
+        if($geocoded instanceof AddressGeocoded) {
+            $geocoded->strategyToGeocoded = 'Usando endereço';
+            return $geocoded;
+        }
+
+        //tenta novamente somente com o bairro
+        $address->address = $district;
+        $geocoded = $this->geocode($address);
+        if ($geocoded instanceof AddressGeocoded) {
+            $geocoded->strategyToGeocoded = 'Usando bairro';
+            return $geocoded;
+        }
+
+        //tenta sem endereço para pegar somente pelo CEP
+        $address->address = '';
+        $geocoded = $this->geocode($address);
+        if ($geocoded instanceof AddressGeocoded) {
+            $geocoded->strategyToGeocoded = 'Usando cep';
+            return $geocoded;
+        }
+
+        return null;
+    }
+
+    private function geocode(Address $addressObj, $retry = false): ?AddressGeocoded
     {
         $components = $this->buildComponents($addressObj);
-        $obj = $this->client->get($addressObj->address, $components);
+        try {
+            $obj = $this->client->get($addressObj->address, $components);
+        } catch (GeocoderClientException $e) {
+            if($retry) {
+                return null;
+            }
+            //previne alguma falha de rede
+            sleep(1);
+            $this->geocode($addressObj, true);
+        }
 
         $status = $obj['status'];
         switch ($status) {

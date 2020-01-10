@@ -33,7 +33,7 @@ class GeocoderClient
         $obj = json_decode($content, true);
 
         if(is_null($obj)) {
-            throw new Exception("Erro na url: {$url}. Erro no conteúdo: {$content}. Mensagem: " . json_last_error_msg());
+            throw new GeocoderClientException("Erro na url: {$url}. Erro no conteúdo: {$content}. Mensagem: " . json_last_error_msg());
         }
 
         return $obj;

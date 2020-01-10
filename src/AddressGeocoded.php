@@ -11,4 +11,5 @@ class AddressGeocoded
     public $formatted_address;
     public $lat;
     public $lng;
+    public $strategyToGeocoded;
 }
