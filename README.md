@@ -18,3 +18,21 @@ Para exemplo do modelo de arquivo sendo utilizado, veja a pasta "sample":
 ```shell script
 php geocode.php sample/sample.csv
 ``` 
+
+Você também pode utilizar o exemplo de apenas uma linha para não consumir seus créditos de api:
+
+```shell script
+php geocode.php sample/sample-one-line.csv
+```
+
+Um segundo parâmetro pode ser passado para informar o nome do arquivo de saída na pasta 'output'.
+
+```shell script
+php geocode.php sample/sample-one-line.csv one-result
+``` 
+
+O arquivo test_geocoding_api pode ser utilizado para testes individuais de geolocalização
+
+```shell script
+/php-google-geocoding/tests$ php test_geocoding_api.php
+```

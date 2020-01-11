@@ -2,10 +2,11 @@
 
 namespace Konscia\GoogleGeocoding;
 
-class Address
+class AddressDTO
 {
-    public $address;
     public $uf;
     public $cityName;
     public $postalCode;
+    public $address;
+    public $localName;
 }

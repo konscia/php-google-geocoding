@@ -1,7 +1,7 @@
 <?php
 
-use Konscia\GoogleGeocoding\Address;
-use Konscia\GoogleGeocoding\GeocoderFactory;
+use Konscia\GoogleGeocoding\AddressDTO;
+use Konscia\GoogleGeocoding\GeocoderServiceFactory;
 use League\CLImate\CLImate;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -9,13 +9,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $climate = new CLImate();
 
-$address = new Address();
-$address->address = 'Rua Pastor William, 1200';
-$address->uf = 'SC';
-$address->cityName = 'Florianópolis';
-$address->postalCode = '88034100';
+$address = new AddressDTO();
+$address->address = 'LINHA CACHOEIRINHA';
+$address->uf = 'RS';
+$address->cityName = 'ENGENHO VELHO';
+$address->postalCode = '99698000';
+$address->localName = 'ESCOLA MUNIC. ENSINO FUND. EPITACIO PESSOA - DESATIVADA';
 
-$geocoder = GeocoderFactory::getInstance();
+$geocoder = GeocoderServiceFactory::getInstance($climate);
 $geocoded = $geocoder->addressToGeocoded($address);
 
 $climate->dump($geocoded);

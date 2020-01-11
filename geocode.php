@@ -1,7 +1,7 @@
 <?php
 
-use Konscia\GoogleGeocoding\Address;
-use Konscia\GoogleGeocoding\GeocoderFactory;
+use Konscia\GoogleGeocoding\AddressDTO;
+use Konscia\GoogleGeocoding\GeocoderServiceFactory;
 use League\CLImate\CLImate;
 use League\CLImate\Exceptions\Exception as ClimateException;
 use League\Csv\Exception as CsvException;
@@ -21,7 +21,6 @@ const CSV_HEADER = [
     "uf",
     "cidade",
     "cep",
-    "bairro",
     "endereco",
     "nome_local"
 ];
@@ -35,6 +34,10 @@ $climate->arguments->add([
     'path' => [
         'description' => 'Caminho do csv a ser importado',
         'required' => true,
+    ],
+    'name' => [
+        'description' => 'Nome do arquivo final',
+        'required' => false,
     ],
 ]);
 
@@ -80,8 +83,8 @@ try {
     /* -------------------- */
 
     $climate->info('Criação do arquivo de saída');
-    $timestamp = time();
-    $writer = Writer::createFromPath(__DIR__ . "/output/{$timestamp}.csv", 'w+');
+    $name = $climate->arguments->get('name') ?: time();
+    $writer = Writer::createFromPath(__DIR__ . "/output/{$name}.csv", 'w+');
     $writer->setDelimiter(CSV_DELIMITER);
     $writerHeader = array_merge($header, [
         'g_type',
@@ -89,8 +92,9 @@ try {
         'g_formatted_address',
         'g_lat',
         'g_lng',
-        'g_partial_match',
-        'g_place_id',
+        'g_city_long_name',
+        'g_district_long_name',
+        'g_strategy_to_geocoded',
     ]);
     $writer->insertOne($writerHeader);
 
@@ -99,24 +103,26 @@ try {
     /* ------------------- */
 
     $climate->info('Iniciando geolocalização dos dados');
-    $geocoder = GeocoderFactory::getInstance();
+    $geocoder = GeocoderServiceFactory::getInstance($climate);
     $linesProcessed = 0;
     $linesGeocoded = 0;
     foreach ($csv as $record) {
         $climate->info('Processando local com id: ' . $record['id']);
         $linesProcessed++;
-        $address = new Address();
+        $address = new AddressDTO();
         $address->address = $record['endereco'];
         $address->uf = $record['uf'];;
         $address->cityName = $record['cidade'];;
         $address->postalCode = $record['cep'];
+        $address->localName = $record['nome_local'];
 
         $newRecord = array_values($record);
-        $geocoded = $geocoder->addressToGeocoded($address, $record['bairro']);
+        $geocoded = $geocoder->addressToGeocoded($address);
 
         if(is_null($geocoded)) {
             $climate->info('Geocodificação não realizada');
             $newRecord = array_merge($record, [
+                '',
                 '',
                 '',
                 '',
@@ -133,8 +139,9 @@ try {
                 $geocoded->formatted_address,
                 $geocoded->lat,
                 $geocoded->lng,
-                $geocoded->partial_match,
-                $geocoded->place_id
+                $geocoded->city_long_name,
+                $geocoded->district_long_name,
+                $geocoded->strategyToGeocoded
             ]);
             $linesGeocoded++;
         }

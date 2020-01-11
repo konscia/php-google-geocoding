@@ -2,7 +2,7 @@
 
 namespace Konscia\GoogleGeocoding;
 
-class AddressGeocoded
+class AddressGeocodedDTO
 {
     public $type;
     public $place_id;
@@ -11,5 +11,7 @@ class AddressGeocoded
     public $formatted_address;
     public $lat;
     public $lng;
+    public $city_long_name;
+    public $district_long_name;
     public $strategyToGeocoded;
 }

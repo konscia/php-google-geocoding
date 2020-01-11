@@ -2,9 +2,6 @@
 
 namespace Konscia\GoogleGeocoding;
 
-use Exception;
-use http\Exception\RuntimeException;
-
 class GeocoderClient
 {
     /** @var string */
@@ -18,17 +15,11 @@ class GeocoderClient
         $this->apiKey = $apiKey;
     }
 
-    /**
-     * @param string $address
-     * @param array $components
-     * @return array
-     * @throws Exception
-     */
-    public function get(string $address, array $components = []): array
+    public function get(string $addressUrl, array $components = []): array
     {
-        $address = urlencode($address);
-        $componentsUrl = $this->convertGoogleComponentsFormat($components);
-        $url = "{$this->uriBase}/json?address={$address}&components={$componentsUrl}&key={$this->apiKey}";
+        $addressUrl = urlencode($addressUrl);
+        $componentsUrl = urlencode($this->convertGoogleComponentsFormat($components));
+        $url = "{$this->uriBase}/json?address={$addressUrl}&components={$componentsUrl}&key={$this->apiKey}";
         $content = file_get_contents($url);
         $obj = json_decode($content, true);
 
@@ -41,6 +32,6 @@ class GeocoderClient
 
     public function convertGoogleComponentsFormat(array $components): string
     {
-        return urlencode(str_replace('=', ':', http_build_query($components, null, '|')));
+        return str_replace('=', ':', http_build_query($components, null, '|'));
     }
 }
