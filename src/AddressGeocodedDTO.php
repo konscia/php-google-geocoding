@@ -13,5 +13,4 @@ class AddressGeocodedDTO
     public $lng;
     public $city_long_name;
     public $district_long_name;
-    public $strategyToGeocoded;
 }

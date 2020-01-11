@@ -93,8 +93,7 @@ try {
         'g_lat',
         'g_lng',
         'g_city_long_name',
-        'g_district_long_name',
-        'g_strategy_to_geocoded',
+        'g_district_long_name'
     ]);
     $writer->insertOne($writerHeader);
 
@@ -128,11 +127,10 @@ try {
                 '',
                 '',
                 '',
-                '',
                 ''
             ]);
         } else {
-            $climate->info('Geocodificação realizada com sucesso com método: ' . $geocoded->strategyToGeocoded);
+            $climate->info('Geocodificação realizada com sucesso');
             $newRecord = array_merge($record, [
                 $geocoded->type,
                 $geocoded->location_type,
@@ -140,8 +138,7 @@ try {
                 $geocoded->lat,
                 $geocoded->lng,
                 $geocoded->city_long_name,
-                $geocoded->district_long_name,
-                $geocoded->strategyToGeocoded
+                $geocoded->district_long_name
             ]);
             $linesGeocoded++;
         }
